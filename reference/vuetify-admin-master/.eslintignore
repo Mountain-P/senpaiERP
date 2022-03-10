@@ -1,0 +1,7 @@
+**/generator/admin
+**/generator/login
+**/generator/profile
+**/generator/material
+**/generator/users
+node_modules
+dist

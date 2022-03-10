@@ -1,0 +1,3 @@
+[submodule "laravel-admin"]
+	path = packages/laravel
+	url = git@github.com:okami101/laravel-admin.git
