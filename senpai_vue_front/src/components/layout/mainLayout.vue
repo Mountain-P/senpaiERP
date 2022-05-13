@@ -1,7 +1,7 @@
 <template>
   <v-app class="pa-6">
-    <Header />
     <Sidebar />
+    <Header />
     <v-main class="content">
       <router-view />
       <!-- <Footer /> -->
@@ -19,4 +19,14 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.v-main__wrap {
+  padding: 70px 0px 0px 0px;
+}
+.v-navigation-drawer {
+  padding: 70px 0px 0px 0px;
+}
+.content {
+  background-color: #f6f7ff;
+}
+</style>

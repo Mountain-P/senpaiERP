@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 export default {
   name: "Header",
   components: {},
@@ -46,8 +47,16 @@ export default {
       name: "載入中...",
     },
   }),
-  computed: {},
+  computed: {
+    ...mapState(["drawer"]),
+    DRAWER_STATE: {
+      get() {
+        return this.drawer;
+      },
+    },
+  },
   methods: {
+    ...mapActions(["TOGGLE_DRAWER"]),
     logout() {
       localStorage.removeItem("authenticated");
       this.$router.push("/login");

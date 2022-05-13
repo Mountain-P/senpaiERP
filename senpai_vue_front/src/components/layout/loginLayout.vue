@@ -23,6 +23,6 @@
 
 <style scoped>
 #login-page {
-  background-color: #d0d6b6d0;
+  background-color: #376b6d;
 }
 </style>

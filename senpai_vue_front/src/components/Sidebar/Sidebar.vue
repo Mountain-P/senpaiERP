@@ -10,15 +10,6 @@
     :mini-variant-width="sidebarMinWidth"
     :class="{ 'drawer-mini': !DRAWER_STATE }"
   >
-    <div class="v-list">
-      <a
-        class="v-list-item v-list-item--link grey--text text-sm-h6"
-        target="_blank"
-        href="https://flatlogic.com/generator"
-        >Generate App</a
-      >
-    </div>
-
     <v-list>
       <template v-for="(item, i) in items">
         <v-row v-if="item.heading" :key="item.heading" align="center">
@@ -37,17 +28,17 @@
           v-else-if="item.divider"
           :key="i"
           dark
-          class="my-4"
+          class="my-1"
         ></v-divider>
         <v-list-group
           color="primary"
-          v-else-if="item.children && DRAWER_STATE"
+          v-else-if="item.children"
           :key="item.title"
           v-model="item.model"
           append-icon=""
         >
           <template v-slot:prependIcon>
-            <v-icon size="28">mdi-image-filter-none</v-icon>
+            <v-icon size="28">{{ item.icon }}</v-icon>
           </template>
           <template v-slot:activator>
             <v-list-item-content>
@@ -79,6 +70,7 @@
           :href="item.href ? item.href : null"
           :to="item.link === '#' ? null : item.link"
           link
+          style=""
         >
           <v-list-item-action>
             <v-icon size="28" :color="item.color ? item.color : ''">{{
@@ -97,7 +89,7 @@
 </template>
 
 <script>
-
+import { mapActions, mapState } from "vuex";
 export default {
   props: {
     source: String,
@@ -105,58 +97,135 @@ export default {
   data() {
     return {
       items: [
-        { title: "Dashboard", icon: "mdi-home", link: "/dashboard" },
-        { title: "Typography", icon: "mdi-format-size", link: "/typography" },
-        { title: "Tables", icon: "mdi-grid-large", link: "/tables" },
+        { title: "儀錶板", icon: "mdi-home", link: "/dashboard" },
+        { divider: true },
         {
-          title: "Notifications",
-          icon: "mdi-bell-outline",
-          link: "/notifications",
-        },
-        {
-          title: "UI Elements",
-          icon: "mdi-image-filter-none",
-          link: "/icons",
-          model: false,
+          title: "會計功能",
+          icon: "mdi-account-cash",
+          link: "/accounting",
           children: [
-            { title: "Icons", icon: "mdi-circle-small", link: "/icons" },
-            { title: "Charts", icon: "mdi-circle-small", link: "/charts" },
-            { title: "Maps", icon: "mdi-circle-small", link: "/maps" },
+            {
+              title: "記帳列表",
+              icon: "mdi-cash-fast",
+              link: "/accounting/tables",
+            },
+            {
+              title: "財務報表",
+              icon: "mdi-note-text",
+              link: "/accounting/charts",
+            },
           ],
         },
         { divider: true },
-        { heading: "HELP" },
         {
-          title: "Library",
-          icon: "mdi-book-variant-multiple",
-          href: "https://flatlogic.com/templates",
-        },
-        {
-          title: "Support",
-          icon: "mdi-forum",
-          href: "https://flatlogic.com/forum/",
-        },
-        {
-          title: "FAQ",
-          icon: "mdi-help-circle-outline",
-          href: "https://flatlogic.com/templates/vue-material-template",
+          title: "專案管理",
+          icon: "mdi-newspaper-variant-outline",
+          link: "/projectManage",
+          children: [
+            {
+              title: "專案列表",
+              icon: "mdi-playlist-edit",
+              link: "/projectManage/tables",
+            },
+            {
+              title: "專案報表",
+              icon: "mdi-note-text",
+              link: "/projectManage/charts",
+            },
+          ],
         },
         { divider: true },
-        { heading: "PROJECTS" },
-        { title: "My recent", icon: "mdi-circle-medium", color: "warning" },
-        { title: "Starred", icon: "mdi-circle-medium", color: "primary" },
-        { title: "Background", icon: "mdi-circle-medium", color: "error" },
+        {
+          title: "員工管理",
+          icon: "mdi-account",
+          link: "/employeeManage",
+          children: [
+            {
+              title: "員工列表",
+              icon: "mdi-format-list-bulleted",
+              link: "/employeeManage/employeeTables",
+            },
+            {
+              title: "PT員工列表",
+              icon: "mdi-format-list-bulleted-type",
+              link: "/employeeManage/PTTables",
+            },
+            {
+              title: "薪資管理",
+              icon: "mdi-account-cash",
+              link: "/employeeManage/salary",
+            },
+            {
+              title: "出班記錄",
+              icon: "mdi-account-hard-hat",
+              link: "/employeeManage/shift",
+            },
+            {
+              title: "薪資報表",
+              icon: "mdi-note-text",
+              link: "/employeeManage/charts",
+            },
+          ],
+        },
+        { divider: true },
+        {
+          title: "器材管理",
+          icon: "mdi-hammer-screwdriver",
+          link: "/equipmentManage",
+          children: [
+            {
+              title: "器材列表",
+              icon: "mdi-format-list-bulleted",
+              link: "/equipmentManage/tables",
+            },
+            {
+              title: "器材使用紀錄",
+              icon: "mdi-clipboard-text-clock",
+              link: "/equipmentManage/usage",
+            },
+            {
+              title: "器材行事曆",
+              icon: "mdi-calendar",
+              link: "/equipmentManage/calendar",
+            },
+          ],
+        },
+        { divider: true },
+        { title: "行事曆", icon: "mdi-calendar", link: "/calendar" },
       ],
       sidebarWidth: 240,
       sidebarMinWidth: 96,
     };
   },
   computed: {
-
+    ...mapState(["drawer"]),
+    DRAWER_STATE: {
+      get() {
+        return this.drawer;
+      },
+      set(newValue) {
+        if (newValue === this.drawer) return;
+        this.TOGGLE_DRAWER();
+      },
     },
+  },
   methods: {
+    ...mapActions(["TOGGLE_DRAWER"]),
   },
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.v-list-item {
+  // padding-left: 30px;
+}
+.v-list-group__header {
+  font-size: 1.5rem;
+}
+.v-list-item-child {
+  font-size: 1rem;
+}
+.nav a {
+  font-weight: unset;
+}
+</style>

@@ -2,414 +2,67 @@
   <v-container fluid>
     <div class="dashboard-page">
       <v-row>
-        <v-col lg="3" sm="6" md="5" cols="12">
+        <v-col lg="12" sm="12" md="12" cols="12">
           <v-card class="mx-1 mb-1">
             <v-card-title class="pa-6 pb-3">
-              <p>Visits Today</p>
+              <p>快速功能</p>
               <v-spacer></v-spacer>
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon color="textColor">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list> </v-list>
-              </v-menu>
             </v-card-title>
             <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters class="pb-5">
-                <v-col cols="5" class="my-auto">
-                  <span
-                    class="font-weight-medium card-dark-grey"
-                    style="font-size: 24px"
-                    >12, 678</span
-                  >
-                </v-col>
-                <v-col cols="6"> </v-col>
-              </v-row>
               <v-row no-gutters class="justify-space-between pb-3">
-                <v-col cols="5">
-                  <div class="card-light-grey">Registrations</div>
-                  <div class="text-h6 card-dark-grey font-weight-regular">
-                    860
-                  </div>
+                <v-col cols="3">
+                  <v-btn depressed color="primary"> 快速記帳 </v-btn>
                 </v-col>
                 <v-col cols="3">
-                  <div class="card-light-grey">Sign Out</div>
-                  <div class="text-h6 card-dark-grey font-weight-regular">
-                    32
-                  </div>
+                  <v-btn depressed color="primary"> 專案管理 </v-btn>
                 </v-col>
-                <v-col cols="4" xl="2">
-                  <div class="text-right card-light-grey">Rate</div>
-                  <div
-                    class="text-right text-h6 card-dark-grey font-weight-regular"
-                  >
-                    3.25%
-                  </div>
+                <v-col cols="3">
+                  <v-btn depressed color="primary"> 會計報表 </v-btn>
+                </v-col>
+                <v-col cols="3">
+                  <v-btn depressed color="primary"> ?? </v-btn>
                 </v-col>
               </v-row>
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col lg="3" sm="6" md="7" cols="12">
+      </v-row>
+      <v-row>
+        <v-col lg="6" sm="12" md="12" cols="12">
           <v-card class="mx-1 mb-1">
             <v-card-title class="pa-6 pb-3">
-              <p>App Performance</p>
+              <p>目前執行專案</p>
               <v-spacer></v-spacer>
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon color="textColor">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-title>{{ item }}</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
             </v-card-title>
             <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters class="pb-5">
-                <div class="mr-4">
-                  <v-icon color="primary" class="ml-n2">
-                    mdi-circle-medium
-                  </v-icon>
-                  <span class="card-light-grey">Integration</span>
-                </div>
-                <div>
-                  <v-icon color="warning"> mdi-circle-medium </v-icon>
-                  <span class="card-light-grey">SDK</span>
-                </div>
-              </v-row>
-              <v-row no-gutters class="pb-3">
-                <v-col>
-                  <div class="text-h6 card-light-grey font-weight-regular">
-                    Integration
-                  </div>
-                  <v-progress-linear
-                    :value="value"
-                    background-color="#ececec"
-                    color="primary"
-                  ></v-progress-linear>
-                </v-col>
-              </v-row>
-              <v-row no-gutters class="pb-1">
-                <v-col>
-                  <div class="text-h6 card-light-grey font-weight-regular">
-                    SDK
-                  </div>
-                  <v-progress-linear
-                    :value="value2"
-                    background-color="#ececec"
-                    color="warning"
-                  ></v-progress-linear>
-                </v-col>
-              </v-row>
+              <v-list-item-group
+                v-model="nowProjectCard.selected"
+                color="primary"
+              >
+                <v-list-item v-for="(item, i) in nowProjectCard.items" :key="i">
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col lg="3" sm="6" md="7" cols="12">
-          <v-card class="mx-1 mb-1" style="min-height: 228px">
-            <v-card-title class="pa-6 pb-3">
-              <p>Server Overview</p>
-              <v-spacer></v-spacer>
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon color="textColor">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-title>{{ item }}</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-card-title>
-            <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters>
-                <v-col
-                  cols="6"
-                  md="5"
-                  lg="6"
-                  xl="4"
-                  class="my-auto text-truncate"
-                >
-                  <span>60% / 37°С / 3.3 Ghz</span>
-                </v-col>
-                <v-col cols="6" md="7" lg="6" xl="8"> </v-col>
-              </v-row>
-              <v-row no-gutters class="my-3">
-                <v-col
-                  cols="6"
-                  md="5"
-                  lg="6"
-                  xl="4"
-                  class="my-auto text-truncate"
-                >
-                  <span>54% / 31°С / 3.3 Ghz</span>
-                </v-col>
-                <v-col cols="6" md="7" lg="6" xl="8"> </v-col>
-              </v-row>
-              <v-row no-gutters>
-                <v-col
-                  cols="6"
-                  md="5"
-                  lg="6"
-                  xl="4"
-                  class="my-auto text-truncate"
-                >
-                  <span>57% / 21°С / 3.3 Ghz</span>
-                </v-col>
-                <v-col cols="6" md="7" lg="6" xl="8"> </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col lg="3" sm="6" md="5" cols="12">
-          <v-card class="mx-1 mb-1" style="height: 228px">
-            <v-card-title class="flex-nowrap pa-6 pb-3">
-              <p class="text-truncate">Revenue Breakdown</p>
-              <v-spacer></v-spacer>
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon color="textColor">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-title>{{ item }}</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-card-title>
-            <v-card-text class="pa-6 pt-0 mb-1">
-              <v-row no-gutters>
-                <v-col cols="12"> </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12">
-          <v-card class="mx-1 mb-1">
-            <v-card-title class="pa-6 pb-0">
-              <v-row no-gutters>
-                <v-col
-                  cols="7"
-                  sm="4"
-                  md="4"
-                  lg="5"
-                  class="d-flex align-center"
-                >
-                  <p>Daily Line Chart</p>
-                </v-col>
-                <v-col
-                  sm="6"
-                  md="6"
-                  lg="5"
-                  class="d-none d-sm-flex align-center"
-                >
-                  <v-icon size="18" color="warning">mdi-circle-medium</v-icon
-                  ><span
-                    class="card-dark-grey font-weight-regular mr-3"
-                    style="font-size: 18px"
-                    >Tablet</span
-                  >
-                  <v-icon size="18" color="primary">mdi-circle-medium</v-icon
-                  ><span
-                    class="card-dark-grey font-weight-regular mr-3"
-                    style="font-size: 18px"
-                    >Mobile</span
-                  >
-                  <v-icon size="18" color="#B1BCFF">mdi-circle-medium</v-icon
-                  ><span
-                    class="card-dark-grey font-weight-regular"
-                    style="font-size: 18px"
-                    >Desktop</span
-                  >
-                </v-col>
-                <v-col cols="5" sm="2" md="2" lg="1" offset-lg="1">
-                  <v-menu>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-select
-                        class="main-chart-select"
-                        v-model="mainApexAreaSelect"
-                        v-bind="attrs"
-                        v-on="on"
-                        dense
-                        flat
-                        single-line
-                        hide-details
-                        outlined
-                      ></v-select>
-                    </template>
-                  </v-menu>
-                </v-col>
-              </v-row>
-            </v-card-title>
-            <v-card-text class="pa-6">
-              <v-row>
-                <v-col> </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col lg="4" sm="6" cols="12">
+        <v-col lg="6" sm="12" md="12" cols="12">
           <v-card class="mx-1 mb-1">
             <v-card-title class="pa-6 pb-3">
-              <p>Light Blue</p>
+              <p>注意事項</p>
               <v-spacer></v-spacer>
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon color="textColor">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list> </v-list>
-              </v-menu>
             </v-card-title>
             <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters>
-                <v-col cols="6" class="my-auto">
-                  <span class="" style="font-size: 42px"
-                    >199 <span class="caption error--text">-3.7%</span>
-                  </span>
-                </v-col>
-                <v-col cols="6"> </v-col>
-              </v-row>
-              <v-row no-gutters class="justify-space-between">
-                <div>
-                  <div class="subtext">
-                    33 <v-icon color="success"> mdi-arrow-top-right</v-icon>
-                  </div>
-                  <div class="subtext-index">Registrations</div>
-                </div>
-                <div>
-                  <div class="subtext">
-                    3.25%<v-icon color="success"> mdi-arrow-top-right</v-icon>
-                  </div>
-                  <div class="subtext-index">Bounce Rate</div>
-                </div>
-                <div>
-                  <div class="subtext">
-                    330<v-icon color="error"> mdi-arrow-bottom-right</v-icon>
-                  </div>
-                  <div class="subtext-index">Views</div>
-                </div>
-              </v-row>
+              <v-list-item-group v-model="noticeCard.selected" color="primary">
+                <v-list-item v-for="(item, i) in noticeCard.items" :key="i">
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
             </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col lg="4" sm="6" cols="12">
-          <v-card class="mx-1 mb-1">
-            <v-card-title class="pa-6 pb-3">
-              <p>Sing App</p>
-              <v-spacer></v-spacer>
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon color="textColor">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list> </v-list>
-              </v-menu>
-            </v-card-title>
-            <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters>
-                <v-col cols="7" class="my-auto">
-                  <span class="" style="font-size: 42px"
-                    >121 <span class="error--text caption">-3.2%</span>
-                  </span>
-                </v-col>
-                <v-col cols="5"> </v-col>
-              </v-row>
-              <v-row no-gutters class="justify-space-between">
-                <div>
-                  <div class="subtext">
-                    15<v-icon color="success"> mdi-arrow-top-right</v-icon>
-                  </div>
-                  <div class="subtext-index">Registrations</div>
-                </div>
-                <div>
-                  <div class="subtext">
-                    3.01%<v-icon color="success"> mdi-arrow-top-right</v-icon>
-                  </div>
-                  <div class="subtext-index">Bounce Rate</div>
-                </div>
-                <div>
-                  <div class="subtext">
-                    302<v-icon color="success"> mdi-arrow-top-right</v-icon>
-                  </div>
-                  <div class="subtext-index">Views</div>
-                </div>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col lg="4" sm="6" cols="12">
-          <v-card class="mx-1 mb-1">
-            <v-card-title class="pa-6 pb-3">
-              <p>RNS</p>
-              <v-spacer></v-spacer>
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon color="textColor">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list> </v-list>
-              </v-menu>
-            </v-card-title>
-            <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters>
-                <v-col cols="7" class="my-auto">
-                  <span class="" style="font-size: 42px"
-                    >175 <span class="error--text caption">-3.1%</span>
-                  </span>
-                </v-col>
-                <v-col cols="5"> </v-col>
-              </v-row>
-              <v-row no-gutters class="justify-space-between">
-                <div>
-                  <div class="subtext">
-                    31 <v-icon color="error"> mdi-arrow-bottom-right</v-icon>
-                  </div>
-                  <div class="subtext-index">Registrations</div>
-                </div>
-                <div>
-                  <div class="subtext">
-                    3.23%<v-icon color="success"> mdi-arrow-top-right</v-icon>
-                  </div>
-                  <div class="subtext-index">Bounce Rate</div>
-                </div>
-                <div>
-                  <div class="subtext">
-                    301<v-icon color="success"> mdi-arrow-top-right</v-icon>
-                  </div>
-                  <div class="subtext-index">Views</div>
-                </div>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12">
-          <v-card class="support-requests mx-1 mb-1">
-            <v-card-title class="pa-6 pb-0">
-              <p>Support Requests</p>
-              <v-spacer></v-spacer>
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="on">
-                    <v-icon color="textColor">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list> </v-list>
-              </v-menu>
-            </v-card-title>
-            <v-card-text class="pa-0"> </v-card-text>
           </v-card>
         </v-col>
       </v-row>
@@ -422,7 +75,24 @@ export default {
   name: "dashBoardView",
   components: {},
   data() {
-    return {};
+    return {
+      nowProjectCard: {
+        selected: 1,
+        items: [
+          { text: "Real-Time", icon: "mdi-clock" },
+          { text: "Audience", icon: "mdi-account" },
+          { text: "Conversions", icon: "mdi-flag" },
+        ],
+      },
+      noticeCard: {
+        selected: 1,
+        items: [
+          { text: "Real-Time", icon: "mdi-clock" },
+          { text: "Audience", icon: "mdi-account" },
+          { text: "Conversions", icon: "mdi-flag" },
+        ],
+      },
+    };
   },
   methods: {},
   mounted() {},
