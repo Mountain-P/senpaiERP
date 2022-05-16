@@ -110,6 +110,17 @@ export default {
               link: "/accounting/tables",
             },
             {
+              title: "帳戶管理",
+              icon: "mdi-cash-fast",
+              link: "/accounting/accounts",
+            },
+            {
+              title: "分類管理",
+              icon: "mdi-cash-fast",
+              link: "/accounting/categorys",
+            },
+
+            {
               title: "財務報表",
               icon: "mdi-note-text",
               link: "/accounting/charts",

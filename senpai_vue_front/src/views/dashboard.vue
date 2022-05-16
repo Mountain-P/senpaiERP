@@ -9,17 +9,17 @@
               <v-spacer></v-spacer>
             </v-card-title>
             <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters class="justify-space-between pb-3">
-                <v-col cols="3">
+              <v-row class="justify-space-between pb-3">
+                <v-col lg="3" sm="12" md="6" cols="12">
                   <v-btn depressed color="primary"> 快速記帳 </v-btn>
                 </v-col>
-                <v-col cols="3">
+                <v-col lg="3" sm="12" md="6" cols="12">
                   <v-btn depressed color="primary"> 專案管理 </v-btn>
                 </v-col>
-                <v-col cols="3">
+                <v-col lg="3" sm="12" md="6" cols="12">
                   <v-btn depressed color="primary"> 會計報表 </v-btn>
                 </v-col>
-                <v-col cols="3">
+                <v-col lg="3" sm="12" md="6" cols="12">
                   <v-btn depressed color="primary"> ?? </v-btn>
                 </v-col>
               </v-row>

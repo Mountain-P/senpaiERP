@@ -4,8 +4,11 @@ import VueRouter from "vue-router";
 import mainLayout from "@/components/layout/mainLayout.vue";
 import loginLayout from "@/components/layout/loginLayout.vue";
 
-import loginView from "@/views/loginView.vue";
-import dashboardView from "@/views/dashboardView.vue";
+import login from "@/views/login.vue";
+import dashboard from "@/views/dashboard.vue";
+import accounting from "@/views/accounting/tables.vue";
+import accountTables from "@/views/accounting/accountTables.vue";
+import categoryTables from "@/views/accounting/categoryTables";
 Vue.use(VueRouter);
 
 const routes = [
@@ -17,7 +20,7 @@ const routes = [
       {
         path: "/login",
         name: "login",
-        component: loginView,
+        component: login,
         meta: {
           title: "登入",
         },
@@ -33,7 +36,22 @@ const routes = [
       {
         path: "dashboard",
         name: "Dashboard",
-        component: dashboardView,
+        component: dashboard,
+      },
+      {
+        path: "/accounting/tables",
+        name: "accountingTables",
+        component: accounting,
+      },
+      {
+        path: "/accounting/accounts",
+        name: "accountTables",
+        component: accountTables,
+      },
+      {
+        path: "/accounting/categorys",
+        name: "categoryTables",
+        component: categoryTables,
       },
     ],
   },
