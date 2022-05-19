@@ -8,7 +8,10 @@ import login from "@/views/login.vue";
 import dashboard from "@/views/dashboard.vue";
 import accounting from "@/views/accounting/tables.vue";
 import accountTables from "@/views/accounting/accountTables.vue";
-import categoryTables from "@/views/accounting/categoryTables";
+import categoryTables from "@/views/accounting/categoryTables.vue";
+import projectTables from "@/views/project/tables.vue";
+import empolyeeManageTables from "@/views/employee/tables.vue";
+import empolyeeManagePTTables from "@/views/employee/PTtables.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -52,6 +55,21 @@ const routes = [
         path: "/accounting/categorys",
         name: "categoryTables",
         component: categoryTables,
+      },
+      {
+        path: "/projectManage/tables",
+        name: "projectTables",
+        component: projectTables,
+      },
+      {
+        path: "/employeeManage/tables",
+        name: "employeeManageTables",
+        component: empolyeeManageTables,
+      },
+      {
+        path: "/employeeManage/PTtables",
+        name: "employeeManagePTTables",
+        component: empolyeeManagePTTables,
       },
     ],
   },

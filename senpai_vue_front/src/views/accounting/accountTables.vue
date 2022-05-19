@@ -114,6 +114,7 @@ export default {
         { text: "帳戶備註", value: "description" },
         { text: "帳戶類型", value: "type" }, //資產 or 負債
         { text: "目前餘額", value: "balence" },
+        { text: "動作", value: "actions" },
       ],
       contents: [],
       editedIndex: -1,

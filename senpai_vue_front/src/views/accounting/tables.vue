@@ -51,7 +51,7 @@
                     </v-col>
                     <v-col cols="12" sm="6" md="6">
                       <v-text-field
-                        v-model="editedItem.cost"
+                        v-model="editedItem.amount"
                         label="金額"
                       ></v-text-field>
                     </v-col>
@@ -143,7 +143,7 @@ export default {
         { text: "日期/時間", value: "Datetime" },
         { text: "序號", value: "serialNum" },
         { text: "內容", value: "description" },
-        { text: "金額", value: "cost" },
+        { text: "金額", value: "amount" },
         { text: "分類", value: "category" },
         { text: "專案名稱", value: "project" },
         { text: "支出帳戶", value: "useAccount" },
@@ -156,7 +156,7 @@ export default {
         Datetime: null,
         serialNum: "",
         description: "",
-        cost: "",
+        amount: "",
         category: "",
         project: "",
         notice: "",
@@ -168,7 +168,7 @@ export default {
         Datetime: null,
         serialNum: "",
         description: "",
-        cost: "",
+        amount: "",
         category: "",
         project: "",
         notice: "",
@@ -187,7 +187,7 @@ export default {
           Datetime: new Date(),
           serialNum: "A000",
           description: "支出內容",
-          cost: 100,
+          amount: 100,
           category: "日常支出",
           project: "專案名稱",
           notice: "註記",

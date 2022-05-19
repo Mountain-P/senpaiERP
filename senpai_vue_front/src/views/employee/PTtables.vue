@@ -3,7 +3,7 @@
     <v-data-table :headers="headers" :items="contents" class="elevation-1">
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>類別列表</v-toolbar-title>
+          <v-toolbar-title>PT員工列表</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
 
@@ -17,7 +17,7 @@
                 v-bind="openDialogButton.attrs"
                 v-on="openDialogButton.on"
               >
-                新增類別
+                新增員工PT
               </v-btn>
             </template>
             <v-card>
@@ -28,17 +28,79 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="12" md="12">
                       <v-text-field
-                        v-model="editedItem.name"
-                        label="類別名稱"
+                        v-model="editedItem.number"
+                        label="員工編號"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
-                      <v-textarea
-                        v-model="editedItem.category"
-                        label="類別大分類"
-                      ></v-textarea>
+                      <v-text-field
+                        v-model="editedItem.postion"
+                        label="職稱"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="6" sm="12" md="6">
+                      <v-text-field
+                        v-model="editedItem.name"
+                        label="姓名"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="6" sm="12" md="6">
+                      <v-text-field
+                        v-model="editedItem.phone"
+                        label="連絡電話"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="6" sm="12" md="6">
+                      <v-text-field
+                        v-model="editedItem.idNumber"
+                        label="身分證字號"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="6" sm="12" md="6">
+                      <v-menu
+                        v-model="datePicker"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="datePickerBind">
+                          <v-text-field
+                            v-model="editedItem.birthday"
+                            label="生日"
+                            readonly
+                            v-bind="datePickerBind.attrs"
+                            v-on="datePickerBind.on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="editedItem.birthday"
+                          @input="datePicker = false"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="12">
+                      <v-text-field
+                        v-model="editedItem.baseSalary"
+                        label="底薪"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="6" sm="12" md="6">
+                      <v-file-input
+                        v-model="editedItem.idPictureUpside"
+                        accept="image/*"
+                        label="身分證正面檔案"
+                      ></v-file-input>
+                    </v-col>
+                    <v-col cols="6" sm="12" md="6">
+                      <v-file-input
+                        v-model="editedItem.idPictureDownside"
+                        accept="image/*"
+                        label="身分證反面檔案"
+                      ></v-file-input>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -82,25 +144,41 @@
 <script>
 import DatetimePicker from "@/components/DateTimePicker/DateTimePicker.vue";
 export default {
-  name: "categoryTables",
+  name: "EmployeeManagePTTables",
   data() {
     return {
       dialog: false,
       dialogDelete: false,
+      datePicker: false,
       headers: [
-        { text: "類別名稱", value: "name" },
-        { text: "類明大分類", value: "category" },
-        { text: "動作", value: "actions" },
+        { text: "員工編號", value: "idnumber" },
+        { text: "姓名", value: "name" },
+        { text: "職稱", value: "postion" },
+        { text: "功能", value: "actions" },
       ],
       contents: [],
       editedIndex: -1,
       editedItem: {
+        number: "",
         name: "",
-        category: "",
+        birthday: "",
+        postion: "",
+        idNumber: "",
+        baseSalary: "",
+        phone: "",
+        idPictureUpside: null,
+        idPictureDownside: null,
       },
       defaultItem: {
+        number: "",
         name: "",
-        category: "",
+        birthday: "",
+        postion: "",
+        idNumber: "",
+        baseSalary: "",
+        phone: "",
+        idPictureUpside: null,
+        idPictureDownside: null,
       },
     };
   },
@@ -108,7 +186,11 @@ export default {
   methods: {
     //初始化表格 Pull data from API
     initialize() {
-      this.contents = [];
+      this.contents = [
+        {
+          name: "賴奕辰",
+        },
+      ];
     },
     //編輯按鈕動作
     editItem(item) {

@@ -154,7 +154,7 @@ export default {
             {
               title: "員工列表",
               icon: "mdi-format-list-bulleted",
-              link: "/employeeManage/employeeTables",
+              link: "/employeeManage/tables",
             },
             {
               title: "PT員工列表",
@@ -198,6 +198,19 @@ export default {
               title: "器材行事曆",
               icon: "mdi-calendar",
               link: "/equipmentManage/calendar",
+            },
+          ],
+        },
+        { divider: true },
+        {
+          title: "客戶管理",
+          icon: "mdi-hammer-screwdriver",
+          link: "/clientManage",
+          children: [
+            {
+              title: "客戶列表",
+              icon: "mdi-format-list-bulleted",
+              link: "/clientManage/tables",
             },
           ],
         },
