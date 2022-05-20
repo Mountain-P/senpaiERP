@@ -164,12 +164,12 @@ export default {
             {
               title: "薪資管理",
               icon: "mdi-account-cash",
-              link: "/employeeManage/salary",
+              link: "/employeeManage/salaryManage",
             },
             {
               title: "出班記錄",
               icon: "mdi-account-hard-hat",
-              link: "/employeeManage/shift",
+              link: "/employeeManage/duty",
             },
             {
               title: "薪資報表",

@@ -4,6 +4,8 @@ import VueRouter from "vue-router";
 import mainLayout from "@/components/layout/mainLayout.vue";
 import loginLayout from "@/components/layout/loginLayout.vue";
 
+import PageNotFound from "@/views/pageNotFound.vue"
+
 import login from "@/views/login.vue";
 import dashboard from "@/views/dashboard.vue";
 import accounting from "@/views/accounting/tables.vue";
@@ -12,6 +14,8 @@ import categoryTables from "@/views/accounting/categoryTables.vue";
 import projectTables from "@/views/project/tables.vue";
 import empolyeeManageTables from "@/views/employee/tables.vue";
 import empolyeeManagePTTables from "@/views/employee/PTtables.vue";
+import employeeManageSalaryManage from "@/views/employee/salaryManage.vue"
+import employeeManageDutyTables from "@/views/employee/dutyTables.vue"
 Vue.use(VueRouter);
 
 const routes = [
@@ -36,6 +40,7 @@ const routes = [
     name: "layout",
     component: mainLayout,
     children: [
+
       {
         path: "dashboard",
         name: "Dashboard",
@@ -71,6 +76,17 @@ const routes = [
         name: "employeeManagePTTables",
         component: empolyeeManagePTTables,
       },
+      {
+        path: "/employeeManage/salaryManage",
+        name: "employeeManageSalaryManage",
+        component: employeeManageSalaryManage
+      },
+      {
+        path: "/employeeManage/duty",
+        name: "employeeManageDutyTables",
+        component: employeeManageDutyTables
+      },
+      { path: "*", component: PageNotFound },
     ],
   },
 ];

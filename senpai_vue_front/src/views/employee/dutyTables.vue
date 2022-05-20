@@ -3,7 +3,7 @@
     <v-data-table :headers="headers" :items="contents" class="elevation-1">
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>PT員工列表</v-toolbar-title>
+          <v-toolbar-title>出班紀錄</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
 
@@ -11,7 +11,7 @@
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="openDialogButton">
               <v-btn color="primary" dark class="mb-2" v-bind="openDialogButton.attrs" v-on="openDialogButton.on">
-                新增員工PT
+                新增排班
               </v-btn>
             </template>
             <v-card>
@@ -23,38 +23,16 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="12" md="12">
-                      <v-text-field v-model="editedItem.number" label="員工編號"></v-text-field>
+                      <v-text-field v-model="editedItem.serial" label="編號"></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
-                      <v-text-field v-model="editedItem.postion" label="職稱"></v-text-field>
+                      <v-text-field v-model="editedItem.project" label="專案"></v-text-field>
                     </v-col>
                     <v-col cols="6" sm="12" md="6">
-                      <v-text-field v-model="editedItem.name" label="姓名"></v-text-field>
+                      <v-text-field v-model="editedItem.name" label="人員姓名"></v-text-field>
                     </v-col>
                     <v-col cols="6" sm="12" md="6">
-                      <v-text-field v-model="editedItem.phone" label="連絡電話"></v-text-field>
-                    </v-col>
-                    <v-col cols="6" sm="12" md="6">
-                      <v-text-field v-model="editedItem.idNumber" label="身分證字號"></v-text-field>
-                    </v-col>
-                    <v-col cols="6" sm="12" md="6">
-                      <v-menu v-model="datePicker" :close-on-content-click="false" :nudge-right="40"
-                        transition="scale-transition" offset-y min-width="auto">
-                        <template v-slot:activator="datePickerBind">
-                          <v-text-field v-model="editedItem.birthday" label="生日" readonly v-bind="datePickerBind.attrs"
-                            v-on="datePickerBind.on"></v-text-field>
-                        </template>
-                        <v-date-picker v-model="editedItem.birthday" @input="datePicker = false"></v-date-picker>
-                      </v-menu>
-                    </v-col>
-
-                    <v-col cols="6" sm="12" md="6">
-                      <v-file-input v-model="editedItem.idPictureUpside" accept="image/*" label="身分證正面檔案">
-                      </v-file-input>
-                    </v-col>
-                    <v-col cols="6" sm="12" md="6">
-                      <v-file-input v-model="editedItem.idPictureDownside" accept="image/*" label="身分證反面檔案">
-                      </v-file-input>
+                      <v-text-field v-model="editedItem.workContent" label="工作內容"></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -94,15 +72,15 @@
 <script>
 import DatetimePicker from "@/components/DateTimePicker/DateTimePicker.vue";
 export default {
-  name: "EmployeeManagePTTables",
+  name: "EmployeeManageTables",
   data() {
     return {
       dialog: false,
       dialogDelete: false,
       datePicker: false,
       headers: [
-        { text: "員工編號", value: "idnumber" },
-        { text: "姓名", value: "name" },
+        { text: "員工編號", value: "name" },
+        { text: "姓名", value: "category" },
         { text: "職稱", value: "postion" },
         { text: "功能", value: "actions" },
       ],
@@ -113,7 +91,8 @@ export default {
         name: "",
         birthday: "",
         postion: "",
-        idNumber: "", 
+        idNumber: "",
+        baseSalary: "",
         phone: "",
         idPictureUpside: null,
         idPictureDownside: null,
@@ -124,6 +103,7 @@ export default {
         birthday: "",
         postion: "",
         idNumber: "",
+        baseSalary: "",
         phone: "",
         idPictureUpside: null,
         idPictureDownside: null,
@@ -134,11 +114,7 @@ export default {
   methods: {
     //初始化表格 Pull data from API
     initialize() {
-      this.contents = [
-        {
-          name: "賴奕辰",
-        },
-      ];
+      this.contents = [];
     },
     //編輯按鈕動作
     editItem(item) {
