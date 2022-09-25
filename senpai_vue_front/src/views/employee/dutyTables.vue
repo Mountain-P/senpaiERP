@@ -1,71 +1,98 @@
 <template>
   <v-container>
-    <v-data-table :headers="headers" :items="contents" class="elevation-1">
-      <template v-slot:top>
-        <v-toolbar flat>
-          <v-toolbar-title>出班紀錄</v-toolbar-title>
-          <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
+    <v-row>
+      <v-col cols="12" sm="12" md="2">
+        <v-card class="mx-auto" max-width="300" tile>
+          <v-list flat>
+            <v-subheader>員工清單</v-subheader>
+            <v-list-item-group v-model="employeeSel" color="primary">
+              <v-list-item v-for="(item, i) in employeeList" :key="i">
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-card>
+      </v-col>
+      <v-col col="12" sm="12" md="10">
+        <v-data-table :headers="headers" :items="contents" class="elevation-1">
+          <template v-slot:top>
+            <v-toolbar flat>
+              <v-toolbar-title>出班紀錄</v-toolbar-title>
+              <v-divider class="mx-4" inset vertical></v-divider>
+              <v-spacer></v-spacer>
 
-          <!-- 新增/編輯 對話視窗 -->
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="openDialogButton">
-              <v-btn color="primary" dark class="mb-2" v-bind="openDialogButton.attrs" v-on="openDialogButton.on">
-                新增排班
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="text-h5">{{ formTitle }}</span>
-              </v-card-title>
+              <!-- 新增/編輯 對話視窗 -->
+              <v-dialog v-model="dialog" max-width="500px">
+                <template v-slot:activator="openDialogButton">
+                  <v-btn color="primary" dark class="mb-2" v-bind="openDialogButton.attrs" v-on="openDialogButton.on">
+                    新增排班
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="text-h5">{{ formTitle }}</span>
+                  </v-card-title>
 
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="12" md="12">
-                      <v-text-field v-model="editedItem.serial" label="編號"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="12" md="12">
-                      <v-text-field v-model="editedItem.project" label="專案"></v-text-field>
-                    </v-col>
-                    <v-col cols="6" sm="12" md="6">
-                      <v-text-field v-model="editedItem.name" label="人員姓名"></v-text-field>
-                    </v-col>
-                    <v-col cols="6" sm="12" md="6">
-                      <v-text-field v-model="editedItem.workContent" label="工作內容"></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12" sm="12" md="12">
+                          <v-text-field v-model="editedItem.workDate" label="出班日期"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="12">
+                          <v-text-field v-model="editedItem.project" label="專案"></v-text-field>
+                        </v-col>
+                        <v-col cols="6" sm="12" md="6">
+                          <v-text-field v-model="editedItem.name" label="人員姓名"></v-text-field>
+                        </v-col>
+                        <v-col cols="6" sm="12" md="12">
+                          <v-text-field v-model="editedItem.workContent" label="工作內容"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="6">
+                          <v-text-field v-model="editedItem.workSalary" label="預定工資"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="6">
+                          <v-text-field v-model="editedItem.workLocation" label="集合地點"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="6">
+                          <v-text-field v-model="editedItem.workTime" label="集合時間"></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
 
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close"> 取消 </v-btn>
-                <v-btn color="blue darken-1" text @click="save"> 儲存 </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <!-- 新增/編輯 對話視窗 -->
-          <!-- 刪除 對話視窗 -->
-          <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title class="text-h5">確定要刪除此項目?</v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">取消</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">確定</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <!-- 刪除 對話視窗 -->
-        </v-toolbar>
-      </template>
-      <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-      </template>
-    </v-data-table>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="close"> 取消 </v-btn>
+                    <v-btn color="blue darken-1" text @click="save"> 儲存 </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <!-- 新增/編輯 對話視窗 -->
+              <!-- 刪除 對話視窗 -->
+              <v-dialog v-model="dialogDelete" max-width="500px">
+                <v-card>
+                  <v-card-title class="text-h5">確定要刪除此項目?</v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="closeDelete">取消</v-btn>
+                    <v-btn color="blue darken-1" text @click="deleteItemConfirm">確定</v-btn>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <!-- 刪除 對話視窗 -->
+            </v-toolbar>
+          </template>
+          <template v-slot:[`item.actions`]="{ item }">
+            <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+            <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -75,38 +102,37 @@ export default {
   name: "EmployeeManageTables",
   data() {
     return {
+      employeeSel: null,
+      employeeList: [{ text: "讀取中" }],
       dialog: false,
       dialogDelete: false,
       datePicker: false,
       headers: [
-        { text: "員工編號", value: "name" },
-        { text: "姓名", value: "category" },
-        { text: "職稱", value: "postion" },
-        { text: "功能", value: "actions" },
+        { text: "員工名稱", value: "name" },
+        { text: "專案", value: "project" },
+        { text: "工作內容", value: "workContent" },
+        { text: "時間", value: "time" },
       ],
       contents: [],
       editedIndex: -1,
       editedItem: {
-        number: "",
-        name: "",
-        birthday: "",
-        postion: "",
-        idNumber: "",
-        baseSalary: "",
-        phone: "",
-        idPictureUpside: null,
-        idPictureDownside: null,
+        workDate: null,
+        project: "",
+        employeeId: "",
+        workContent: "",
+        workSalary: "",
+        workLocation: "",
+        workTime: "",
+
       },
       defaultItem: {
-        number: "",
-        name: "",
-        birthday: "",
-        postion: "",
-        idNumber: "",
-        baseSalary: "",
-        phone: "",
-        idPictureUpside: null,
-        idPictureDownside: null,
+        workDate: null,
+        project: "",
+        employeeId: "",
+        workContent: "",
+        workSalary: "",
+        workLocation: "",
+        workTime: "",
       },
     };
   },
@@ -171,7 +197,7 @@ export default {
   computed: {
     //結合
     formTitle() {
-      return this.editedIndex === -1 ? "新增類別" : "編輯類別";
+      return this.editedIndex === -1 ? "新增排班" : "編輯排班";
     },
   },
   watch: {

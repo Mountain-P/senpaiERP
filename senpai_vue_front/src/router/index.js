@@ -16,6 +16,9 @@ import empolyeeManageTables from "@/views/employee/tables.vue";
 import empolyeeManagePTTables from "@/views/employee/PTtables.vue";
 import employeeManageSalaryManage from "@/views/employee/salaryManage.vue"
 import employeeManageDutyTables from "@/views/employee/dutyTables.vue"
+import equipmentManageTables from '@/views/equipment/tables.vue'
+import equipmentManageUsage from '@/views/equipment/usage.vue'
+import clientManageTables from '@/views/client/tables.vue';
 Vue.use(VueRouter);
 
 const routes = [
@@ -85,6 +88,21 @@ const routes = [
         path: "/employeeManage/duty",
         name: "employeeManageDutyTables",
         component: employeeManageDutyTables
+      },
+      {
+        path: "/equipmentManage/tables",
+        name: "equipmentManageTables",
+        component: equipmentManageTables
+      },
+      {
+        path: "/equipmentManage/usage",
+        name: "equipmantManageUsage",
+        component: equipmentManageUsage
+      },
+      {
+        path: "clientManage/tables",
+        name: "clientManageTables",
+        component: clientManageTables,
       },
       { path: "*", component: PageNotFound },
     ],
